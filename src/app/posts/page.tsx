@@ -4,7 +4,7 @@ import { Heart } from "lucide-react";
 import { MessageCircle } from "lucide-react";
 import { Send } from "lucide-react";
 import { Bookmark } from "lucide-react";
-// import { Page } from "@/app/posts/comment"
+import { useRouter } from "next/navigation";
 
 type likeTypes = {
   profileImage: string;
@@ -27,8 +27,9 @@ type postType = {
 
 const Page = () => {
   const [posts, setPosts] = useState<postType>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
   console.log(posts);
-
   const getPosts = async () => {
     console.log("working");
     const jsonData = await fetch("https://ig-backend-t4u4.onrender.com/posts");
@@ -36,13 +37,28 @@ const Page = () => {
     setPosts(response);
   };
 
+  const redirectToComments = (postId: string) => {
+    router.push(`posts/comment/${postId}`);
+  };
+
   useEffect(() => {
     getPosts();
+    setLoading(true);
   }, []);
+
+  if (loading === false) {
+    return (
+      <div className="flex-col gap-4 w-full flex items-center justify-center mt-[400px]">
+        <div className="w-15 h-15 border-4 border-transparent text-fuchsia-600 text-4xl animate-spin flex items-center justify-center border-t-fuchsia-600 rounded-full">
+          <div className="w-11 h-11 border-4 border-transparent text-amber-300 text-2xl animate-spin flex items-center justify-center border-t-amber-300 rounded-full"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-black">
-      <div className="bg-black border-b-2 border-zinc-800 pb-1">
+      <div className="bg-black border-b-2 border-zinc-800 pb-2">
         <img
           className="w-300 h-11 ml-2"
           src="https://t4.ftcdn.net/jpg/03/97/48/01/360_F_397480131_ifXqWNKVteOhczWDJBeODrnMIbVcVp13.jpg"
@@ -50,7 +66,6 @@ const Page = () => {
         />
       </div>
       {posts?.map((post) => {
-        console.log(post);
         return (
           <div className="text-white pt-1" key={post._id}>
             <div className="flex pb-4 pt-2 gap-3 ml-2">
@@ -73,7 +88,7 @@ const Page = () => {
             </div>
             <div className="ml-3 pb-1 font-medium">{post.caption}</div>
             <div
-              onClick={() => Page}
+              onClick={() => redirectToComments(post._id)}
               className="ml-3 pb-4 font-medium text-xs text-gray-400"
             >
               view all comments

@@ -1,33 +1,22 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 function signupPage() {
   const [email, setEmail] = useState<string>("");
-  const [firstName, setFirstName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
   const [userName, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const [emailError, setEmailError] = useState<boolean>(false);
-  const [firstNameError, setFirstNameError] = useState<boolean>(false);
-  const [lastNameError, setLastNameError] = useState<boolean>(false);
   const [userNameError, setUsernameError] = useState<boolean>(false);
   const [passwordError, setPasswordError] = useState<boolean>(false);
 
+  const router = useRouter();
   const handleEmailInput = (e: { target: { value: string } }) => {
     setEmail(e.target.value);
-    console.log(e.target.value);
-  };
-
-  const handleFirstNameInput = (e: { target: { value: string } }) => {
-    setFirstName(e.target.value);
-    console.log(e.target.value);
-  };
-
-  const handleLastNameInput = (e: { target: { value: string } }) => {
-    setLastName(e.target.value);
     console.log(e.target.value);
   };
 
@@ -45,27 +34,17 @@ function signupPage() {
     if (email === "") {
       setEmailError(true);
     }
-    if (firstName === "") {
-      setFirstNameError(true);
-    }
-    if (lastName === "") {
-      setLastNameError(true);
-    }
     if (userName === "") {
       setPasswordError(true);
     }
     if (password === "") {
       setUsernameError(true);
+    } else {
+      router.push("posts");
     }
 
     if (email !== "") {
       setEmailError(false);
-    }
-    if (firstName !== "") {
-      setFirstNameError(false);
-    }
-    if (lastName !== "") {
-      setLastNameError(false);
     }
     if (userName !== "") {
       setPasswordError(false);
@@ -74,6 +53,20 @@ function signupPage() {
       setUsernameError(false);
     }
   };
+
+  useEffect(() => {
+    setLoading(true);
+  });
+
+  if (loading === false) {
+    return (
+      <div className="flex-col gap-4 w-full flex items-center justify-center mt-[400px]">
+        <div className="w-15 h-15 border-4 border-transparent text-fuchsia-600 text-4xl animate-spin flex items-center justify-center border-t-fuchsia-600 rounded-full">
+          <div className="w-11 h-11 border-4 border-transparent text-amber-300 text-2xl animate-spin flex items-center justify-center border-t-amber-300 rounded-full"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-black w-full h-full">
@@ -91,22 +84,6 @@ function signupPage() {
           onChange={handleEmailInput}
         />
         {emailError === true ? (
-          <div className="text-red-600 mr-[200px] text-sm">error</div>
-        ) : null}
-        <Input
-          className="text-white"
-          placeholder="Firstname"
-          onChange={handleFirstNameInput}
-        />
-        {firstNameError === true ? (
-          <div className="text-red-600 mr-[200px] text-sm">error</div>
-        ) : null}
-        <Input
-          className="text-white"
-          placeholder="Lastname"
-          onChange={handleLastNameInput}
-        />
-        {lastNameError === true ? (
           <div className="text-red-600 mr-[200px] text-sm">error</div>
         ) : null}
         <Input
