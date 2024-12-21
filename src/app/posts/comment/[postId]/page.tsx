@@ -3,21 +3,19 @@ import { useState, use, useEffect } from "react";
 
 type commentType = {
   _id: string;
+  comments: string;
   postId: string;
   profileImg: string;
   userId: {
     username: string;
     profileImg: string;
   };
-  comments: string;
 }[];
 
 const Page = ({ params }: { params: Promise<{ postId: string }> }) => {
   const { postId } = use(params);
   const [comments, setComments] = useState<commentType>([]);
-  console.log(comments);
   const getComments = async () => {
-    console.log("working");
     const jsonData = await fetch("https://ig-backend-t4u4.onrender.com/posts");
     const response = await jsonData.json();
     setComments(response);
@@ -26,6 +24,7 @@ const Page = ({ params }: { params: Promise<{ postId: string }> }) => {
   useEffect(() => {
     getComments();
   }, []);
+
   return (
     <div className="bg-black w-full h-full text-white">
       {comments?.map((postComment) => {

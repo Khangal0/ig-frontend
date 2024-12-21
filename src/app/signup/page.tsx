@@ -6,9 +6,10 @@ import { useRouter } from "next/navigation";
 
 function signupPage() {
   const [email, setEmail] = useState<string>("");
-  const [userName, setUsername] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [newUsera, setNewUsera] = useState<boolean>(false);
 
   const [emailError, setEmailError] = useState<boolean>(false);
   const [userNameError, setUsernameError] = useState<boolean>(false);
@@ -17,40 +18,45 @@ function signupPage() {
   const router = useRouter();
   const handleEmailInput = (e: { target: { value: string } }) => {
     setEmail(e.target.value);
-    console.log(e.target.value);
   };
 
   const handleUsernameInput = (e: { target: { value: string } }) => {
     setUsername(e.target.value);
-    console.log(e.target.value);
   };
 
   const handlePasswordInput = (e: { target: { value: string } }) => {
     setPassword(e.target.value);
-    console.log(e.target.value);
   };
 
   const signupButton = () => {
     if (email === "") {
       setEmailError(true);
     }
-    if (userName === "") {
-      setPasswordError(true);
+    if (username === "") {
+      setUsernameError(true);
     }
     if (password === "") {
-      setUsernameError(true);
-    } else {
-      router.push("posts");
+      setPasswordError(true);
     }
 
     if (email !== "") {
       setEmailError(false);
     }
-    if (userName !== "") {
-      setPasswordError(false);
+    if (username !== "") {
+      setUsernameError(false);
     }
     if (password !== "") {
-      setUsernameError(false);
+      setPasswordError(false);
+    }
+
+    if (email !== "") {
+      if (username !== "") {
+        if (password !== "") {
+          content();
+          setNewUsera(true);
+          router.push("posts");
+        }
+      }
     }
   };
 
@@ -67,6 +73,29 @@ function signupPage() {
       </div>
     );
   }
+
+  const content = async () => {
+    const newUser = {
+      email,
+      username,
+      password,
+    };
+
+    const jsonData = await fetch(
+      `https://ig-backend-t4u4.onrender.com/signup`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newUser),
+      }
+    );
+
+    const response = await jsonData.json();
+    const token = response.token;
+    localStorage.setItem("accesstoken", token);
+  };
 
   return (
     <div className="bg-black w-full h-full">

@@ -15,17 +15,14 @@ function loginPage() {
 
   const handleEmailInput = (e: { target: { value: string } }) => {
     setEmail(e.target.value);
-    console.log(e.target.value);
   };
 
   const handleUsernameInput = (e: { target: { value: string } }) => {
     setUsername(e.target.value);
-    console.log(e.target.value);
   };
 
   const handlePasswordInput = (e: { target: { value: string } }) => {
     setPassword(e.target.value);
-    console.log(e.target.value);
   };
 
   const signupButton = () => {

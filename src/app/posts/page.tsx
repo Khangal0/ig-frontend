@@ -18,8 +18,6 @@ type postType = {
   postImg: string;
   userId: {
     username: string;
-    email: string;
-    password: string;
     profileImg: string;
   };
   likes: likeTypes[];
@@ -29,9 +27,8 @@ const Page = () => {
   const [posts, setPosts] = useState<postType>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
-  console.log(posts);
   const getPosts = async () => {
-    console.log("working");
+    console.log("working posts");
     const jsonData = await fetch("https://ig-backend-t4u4.onrender.com/posts");
     const response = await jsonData.json();
     setPosts(response);
