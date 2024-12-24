@@ -25,6 +25,7 @@ type postType = {
 
 const Page = () => {
   const [posts, setPosts] = useState<postType>([]);
+  // const [likes, setLikes] = useState<likeTypes>();
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
   const getPosts = async () => {
@@ -42,6 +43,8 @@ const Page = () => {
     getPosts();
     setLoading(true);
   }, []);
+
+  const handleLike = () => {};
 
   if (loading === false) {
     return (
@@ -75,9 +78,10 @@ const Page = () => {
               </div>
             </div>
             <img className="w-390 h-full mb-4" src={post.postImg} alt="" />
+            <div>{}likes</div>
             <div className="flex justify-between mb-3 ml-3 mr-3">
               <div className="flex gap-3 ">
-                <Heart />
+                <Heart onClick={() => handleLike} />
                 <MessageCircle />
                 <Send />
               </div>
