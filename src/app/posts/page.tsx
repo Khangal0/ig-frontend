@@ -77,11 +77,11 @@ const Page = () => {
                 {post.userId?.username || ""}
               </div>
             </div>
-            <img className="w-390 h-full mb-4" src={post.postImg} alt="" />
-            <div>{}likes</div>
+            <img className="w-390 h-full mb-4" src={post.postImg} />
+            <div>{} likes</div>
             <div className="flex justify-between mb-3 ml-3 mr-3">
               <div className="flex gap-3 ">
-                <Heart onClick={() => handleLike} />
+                <Heart onClick={() => handleLike()} />
                 <MessageCircle />
                 <Send />
               </div>

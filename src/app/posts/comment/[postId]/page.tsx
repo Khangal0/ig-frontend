@@ -1,6 +1,17 @@
 "use client";
 import { useState, use, useEffect } from "react";
 
+type postType = {
+  _id: string;
+  caption: string;
+  postImg: string;
+  comments: string;
+  userId: {
+    username: string;
+    profileImg: string;
+  };
+}[];
+
 type commentType = {
   _id: string;
   comments: string;
@@ -14,9 +25,10 @@ type commentType = {
 
 const Page = ({ params }: { params: Promise<{ postId: string }> }) => {
   const { postId } = use(params);
-  const [comments, setComments] = useState<commentType>([]);
+  console.log(postId);
+  const [comments, setComments] = useState<postType>([]);
   const getComments = async () => {
-    const jsonData = await fetch("https://ig-backend-t4u4.onrender.com/posts");
+    const jsonData = await fetch(`https://ig-backend-t4u4.onrender.com/posts`);
     const response = await jsonData.json();
     setComments(response);
   };
