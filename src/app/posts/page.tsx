@@ -57,7 +57,7 @@ const Page = () => {
   }
 
   return (
-    <div className="bg-black">
+    <div className="bg-black w-screen h-screen">
       <div className="bg-black border-b-2 border-zinc-800 pb-2">
         <img
           className="w-300 h-11 ml-2"

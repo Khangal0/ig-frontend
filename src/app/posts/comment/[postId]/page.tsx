@@ -1,22 +1,10 @@
 "use client";
 import { useState, use, useEffect } from "react";
 
-type postType = {
-  _id: string;
-  caption: string;
-  postImg: string;
-  comments: string;
-  userId: {
-    username: string;
-    profileImg: string;
-  };
-}[];
-
 type commentType = {
   _id: string;
-  comments: string;
+  comment: string;
   postId: string;
-  profileImg: string;
   userId: {
     username: string;
     profileImg: string;
@@ -26,9 +14,11 @@ type commentType = {
 const Page = ({ params }: { params: Promise<{ postId: string }> }) => {
   const { postId } = use(params);
   console.log(postId);
-  const [comments, setComments] = useState<postType>([]);
+  const [comments, setComments] = useState<commentType>([]);
   const getComments = async () => {
-    const jsonData = await fetch(`https://ig-backend-t4u4.onrender.com/posts`);
+    const jsonData = await fetch(
+      `https://ig-backend-t4u4.onrender.com/comment`
+    );
     const response = await jsonData.json();
     setComments(response);
   };
@@ -36,9 +26,9 @@ const Page = ({ params }: { params: Promise<{ postId: string }> }) => {
   useEffect(() => {
     getComments();
   }, []);
-
+  console.log(comments);
   return (
-    <div className="bg-black w-full h-full text-white">
+    <div className="bg-black w-screen h-screen text-white">
       {comments?.map((postComment) => {
         return (
           <div
@@ -51,7 +41,7 @@ const Page = ({ params }: { params: Promise<{ postId: string }> }) => {
             />
             <div className="flex flex-col gap-y-1 ml-1.5">
               <div className="text-xs">{postComment.userId.username}</div>
-              <div className="text-sm">{postComment.comments}</div>
+              <div className="text-sm">{postComment.comment}</div>
             </div>
           </div>
         );

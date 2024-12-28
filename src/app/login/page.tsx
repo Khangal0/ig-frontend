@@ -62,7 +62,7 @@ function loginPage() {
   }
 
   return (
-    <div className="bg-black w-full h-full">
+    <div className="bg-black w-screen h-screen">
       <div className="flex justify-center items-center h-screen flex-col gap-y-2">
         <div className="text-white relative bottom-28">
           <img
