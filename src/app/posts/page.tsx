@@ -5,7 +5,6 @@ import { MessageCircle } from "lucide-react";
 import { Send } from "lucide-react";
 import { Bookmark } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { METHODS } from "http";
 
 type likeTypes = {
   profileImage: string;
@@ -46,13 +45,29 @@ const Page = () => {
   }, []);
 
   const handleLike = async () => {
-    const json = await fetch("https://ig-backend-t4u4.onrender.com/like", {
-      method: "POST",
-      body: JSON.stringify({
-        postId: "",
-        userId: "",
-      }),
-    });
+    if (isUserLiked) {
+      await fetch("https://ig-backend-t4u4.onrender.com/unlike", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          postId,
+          userId,
+        }),
+      });
+    } else {
+      await fetch("https://ig-backend-t4u4.onrender.com/like", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          postId,
+          userId,
+        }),
+      });
+    }
   };
 
   if (loading === false) {
