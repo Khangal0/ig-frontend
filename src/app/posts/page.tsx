@@ -5,6 +5,7 @@ import { MessageCircle } from "lucide-react";
 import { Send } from "lucide-react";
 import { Bookmark } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { METHODS } from "http";
 
 type likeTypes = {
   profileImage: string;
@@ -44,7 +45,15 @@ const Page = () => {
     setLoading(true);
   }, []);
 
-  const handleLike = () => {};
+  const handleLike = async () => {
+    const json = await fetch("https://ig-backend-t4u4.onrender.com/like", {
+      method: "POST",
+      body: JSON.stringify({
+        postId: "",
+        userId: "",
+      }),
+    });
+  };
 
   if (loading === false) {
     return (
@@ -57,7 +66,7 @@ const Page = () => {
   }
 
   return (
-    <div className="bg-black w-screen h-screen">
+    <div className="bg-black w-screen h-full">
       <div className="bg-black border-b-2 border-zinc-800 pb-2">
         <img
           className="w-300 h-11 ml-2"
