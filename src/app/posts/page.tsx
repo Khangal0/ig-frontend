@@ -5,6 +5,8 @@ import { MessageCircle } from "lucide-react";
 import { Send } from "lucide-react";
 import { Bookmark } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { jwtDecode } from "jwt-decode";
+import { log } from "node:console";
 
 type likeTypes = {
   profileImage: string;
@@ -20,14 +22,21 @@ type postType = {
     username: string;
     profileImg: string;
   };
-  likes: likeTypes[];
+  likes: string[];
 }[];
 
 const Page = () => {
   const [posts, setPosts] = useState<postType>([]);
-  // const [likes, setLikes] = useState<likeTypes>();
   const [loading, setLoading] = useState<boolean>(false);
+  console.log(posts);
   const router = useRouter();
+
+  const token = localStorage.getItem("accesstoken");
+  const decoded: { userId: string } = jwtDecode(token || "");
+  const userId = decoded.userId;
+
+  // const isUserLiked = likes.includes(userId);
+
   const getPosts = async () => {
     console.log("working posts");
     const jsonData = await fetch("https://ig-backend-t4u4.onrender.com/posts");
@@ -44,30 +53,27 @@ const Page = () => {
     setLoading(true);
   }, []);
 
-  const handleLike = async () => {
-    if (isUserLiked) {
-      await fetch("https://ig-backend-t4u4.onrender.com/unlike", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          postId,
-          userId,
-        }),
-      });
-    } else {
-      await fetch("https://ig-backend-t4u4.onrender.com/like", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          postId,
-          userId,
-        }),
-      });
-    }
+  const handleLike = async (postId: string) => {
+    await fetch("https://ig-backend-t4u4.onrender.com/like", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        postId,
+        userId,
+      }),
+    });
+
+    // await fetch("https://ig-backend-t4u4.onrender.com/unlike", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     postId,
+    //     userId,
+    //   }),
   };
 
   if (loading === false) {
@@ -90,6 +96,8 @@ const Page = () => {
         />
       </div>
       {posts?.map((post) => {
+        console.log(post.likes);
+
         return (
           <div className="text-white pt-1" key={post._id}>
             <div className="flex pb-4 pt-2 gap-3 ml-2">
@@ -102,15 +110,15 @@ const Page = () => {
               </div>
             </div>
             <img className="w-390 h-full mb-4" src={post.postImg} />
-            <div>{} likes</div>
-            <div className="flex justify-between mb-3 ml-3 mr-3">
+            <div className="flex justify-between mb-1 ml-3 mr-3">
               <div className="flex gap-3 ">
-                <Heart onClick={() => handleLike()} />
+                <Heart onClick={() => handleLike(post._id)} />
                 <MessageCircle />
                 <Send />
               </div>
               <Bookmark />
             </div>
+            <div className="ml-3">{post.likes?.length} likes</div>
             <div className="ml-3 pb-1 font-medium">{post.caption}</div>
             <div
               onClick={() => redirectToComments(post._id)}
