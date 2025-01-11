@@ -1,10 +1,17 @@
-// import { useRouter } from "next/navigation";
-// export const Parents = ({ children }) => {
-//   const home = useRouter();
+import { useRouter } from "next/navigation";
+export const Parents = ({ children }) => {
+  const home = useRouter();
 
-//   return (
-//     <div>
-//       <div>{children} alskdjflsj</div>;
-//     </div>
-//   );
-// };
+  return (
+    <div>
+      <div>
+        <div>sfsadfsdfdsfsafsdfedfdsfsdf</div>
+        {children}
+        <div>
+          a alskdjscda;idhnca cjdyxbhkmn wefdvxc oiubjmn ewfsdxc ukne wfsdcx jmn
+          dcfx kjbn sdcx jhbv ,djcxhflsj
+        </div>
+      </div>
+    </div>
+  );
+};
