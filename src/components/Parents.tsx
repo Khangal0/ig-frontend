@@ -5,7 +5,7 @@ export const Parents = ({ children }) => {
   return (
     <div>
       <div>
-        <div>sfsadfsdfdsfsafsdfedfdsfsdf</div>
+        <div></div>
         {children}
         <div>
           a alskdjscda;idhnca cjdyxbhkmn wefdvxc oiubjmn ewfsdxc ukne wfsdcx jmn

@@ -25,6 +25,7 @@ type postType = {
 }[];
 const Page = () => {
   const [posts, setPosts] = useState<postType>([]);
+  const [like, setLike] = useState<String>("");
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
@@ -33,7 +34,6 @@ const Page = () => {
   const userId = decoded.userId;
 
   const getPosts = async () => {
-    console.log("working posts");
     const jsonData = await fetch("https://ig-backend-t4u4.onrender.com/posts");
     const response = await jsonData.json();
     setPosts(response);
@@ -51,6 +51,7 @@ const Page = () => {
 
   const handleLike = async (postId: string, like: string) => {
     const isUserLiked = like.includes(userId);
+    setLike(isUserLiked);
     if (isUserLiked === true) {
       await fetch(`https://ig-backend-t4u4.onrender.com/unlike`, {
         method: "POST",
@@ -112,8 +113,8 @@ const Page = () => {
               <div className="flex gap-3 ">
                 <Heart
                   onClick={() => handleLike(post._id, post.like)}
-                  // color={ ? "red" : "white"}
-                  // fill={ ? "red" : "black"}
+                  color={like ? "red" : "white"}
+                  fill={like ? "red" : "black"}
                 />
                 <MessageCircle onClick={() => redirectToComments(post._id)} />
                 <Send />

@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { log } from "console";
 import { Heart } from "lucide-react";
 import { useState, use, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
@@ -26,6 +25,7 @@ const Page = ({ params }: { params: Promise<{ postId: string }> }) => {
   const token = localStorage.getItem("accesstoken");
   const decoded: { userId: string } = jwtDecode(token || "");
   const userId = decoded.userId;
+
   const getComments = async () => {
     const jsonData = await fetch(
       `https://ig-backend-t4u4.onrender.com/getComment/${postId}`
