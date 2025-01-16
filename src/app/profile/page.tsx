@@ -53,18 +53,17 @@ const Page = () => {
   }
 
   return (
-    <div>
-      <div className="fixed bg-black w-screen h-full text-white">
-        <div>
-          {user?.map((users) => {
-            return (
-              <div className="text-white pt-1" key={users._id}>
-                <div>{users.username}</div>
-              </div>
-            );
-          })}
-        </div>
+    <div className="fixed bg-black w-screen h-full text-white">
+      <div>
+        {user?.map((users) => {
+          return (
+            <div className="text-white pt-1" key={users._id}>
+              <div>{users.username}</div>
+            </div>
+          );
+        })}
       </div>
+      <Parents />
     </div>
   );
 };

@@ -6,6 +6,7 @@ import { Send } from "lucide-react";
 import { Bookmark } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
+import { Parents } from "@/components/Parents";
 
 type likeTypes = {
   profileImage: string;
@@ -25,7 +26,7 @@ type postType = {
 }[];
 const Page = () => {
   const [posts, setPosts] = useState<postType>([]);
-  const [like, setLike] = useState<String>("");
+  const [like, setLike] = useState<boolean>();
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
@@ -132,6 +133,7 @@ const Page = () => {
           </div>
         );
       })}
+      <Parents />
     </div>
   );
 };

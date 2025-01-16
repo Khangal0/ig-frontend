@@ -1,9 +1,9 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Heart } from "lucide-react";
 import { useState, use, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
+
 type commentType = {
   _id: string;
   postId: string;
@@ -11,10 +11,7 @@ type commentType = {
     username: string;
     profileImg: string;
   };
-  comments: {
-    comment: string;
-    userId: string;
-  };
+  comment: string;
 }[];
 
 const Page = ({ params }: { params: Promise<{ postId: string }> }) => {
@@ -75,10 +72,10 @@ const Page = ({ params }: { params: Promise<{ postId: string }> }) => {
             <div className="flex justify-between">
               <img
                 className="rounded-[50%] w-12 h-12"
-                src={postComment.userId.profileImg}
+                src={postComment.userId?.profileImg}
               />
               <div className="flex flex-col ml-2">
-                <div className="text-">{postComment.userId.username}</div>
+                <div className="text-">{postComment.userId?.username}</div>
                 <div className="text-zinc-600">{postComment.comment}</div>
               </div>
               <div className="flex fixed bottom-0">
